@@ -10,6 +10,7 @@ from .models import (
 )
 from .sentiment import score_to_emotion
 from .state import InternetMoodState
+from .ai_insights import generate_insight
 
 # ── Community definitions ──────────────────────────────────────────────────
 
@@ -100,24 +101,6 @@ EVENTS = [
     {"title": "Outage: Major platform goes down globally",      "shift": -0.20, "duration":  60, "affected": ["techtwitter","wsb","memes"]},
 ]
 
-AI_TEMPLATES = [
-    ("Gaming communities show elevated excitement — a major release appears imminent.", "pattern", "info"),
-    ("Internet anxiety spiked 34% following recent global news coverage.", "spike", "moderate"),
-    ("Nostalgia content is surging across all platforms — expect emotional retrospectives.", "pattern", "info"),
-    ("FinTwit sentiment reversed sharply in the last 15 minutes. Watch for cascade.", "shift", "high"),
-    ("r/aww is singlehandedly keeping the global mood index positive right now.", "pattern", "info"),
-    ("Sentiment divergence between political and gaming spaces is at a 6-hour high.", "shift", "moderate"),
-    ("Viral velocity on {trend} is accelerating beyond normal parameters.", "spike", "high"),
-    ("Emotional propagation from worldnews → politics → fintwit detected. Cascading.", "warning", "high"),
-    ("Three distinct mood clusters forming: joyful niches, anxious news consumers, volatile traders.", "pattern", "moderate"),
-    ("Cultural saturation approaching on current meme cycle — expect irony inversion soon.", "pattern", "info"),
-    ("Internet energy index crossed 80 — unusually high posting intensity for this hour.", "spike", "moderate"),
-    ("Community fragmentation increasing. The internet is not feeling one thing right now.", "shift", "moderate"),
-    ("Positive sentiment wave originated in r/aww and has now reached mainstream feeds.", "shift", "info"),
-    ("Breaking news cycle detected. Expect volatility for the next 2-3 hours.", "warning", "high"),
-    ("Music Twitter driving overall mood uplift — currently the most positive active community.", "pattern", "info"),
-]
-
 
 class MoodDataGenerator:
     """Continuously generates realistic mock internet mood data."""
@@ -181,7 +164,7 @@ class MoodDataGenerator:
                 self.state.update_trends(self._build_trends())
 
             if self._tick % 30 == 0:
-                self._emit_insight()
+                await self._emit_insight()
 
             await asyncio.sleep(2)
 
@@ -333,11 +316,19 @@ class MoodDataGenerator:
         trends.sort(key=lambda t: t.hype_score, reverse=True)
         return trends
 
-    def _emit_insight(self):
-        template, category, severity = random.choice(AI_TEMPLATES)
+    async def _emit_insight(self):
+        mood = self.state.global_mood
+        communities = self.state.communities
         trends = self.state.trends
-        trend_title = trends[0].title if trends else "trending topic"
-        text = template.replace("{trend}", trend_title)
+
+        global_score = mood.score if mood else 0.0
+        emotion = mood.emotion if mood else "NEUTRAL"
+        top_community = communities[0].name if communities else "r/all"
+        top_trend = trends[0].title if trends else "trending topic"
+
+        text, category, severity = await generate_insight(
+            global_score, top_community, top_trend, emotion
+        )
         self.state.add_insight(AIInsight(
             id=str(uuid.uuid4())[:8],
             text=text,
