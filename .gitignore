@@ -20,3 +20,4 @@ frontend/build/
 .vscode/
 .idea/
 *.swp
+frontend/tsconfig.tsbuildinfo
