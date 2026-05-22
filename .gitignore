@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+*.egg-info/
+
+# Node
+node_modules/
+frontend/.next/
+frontend/out/
+frontend/build/
+
+# Env
+.env
+*.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+frontend/tsconfig.tsbuildinfo
