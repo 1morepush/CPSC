@@ -38,20 +38,6 @@ _FALLBACK_TEMPLATES = [
     ("Music Twitter driving overall mood uplift — currently the most positive active community.", "pattern", "info"),
 ]
 
-_SEVERITY_WORDS = {
-    "high": ["surging", "spiking", "collapsing", "exploding", "cascading", "critical"],
-    "moderate": ["shifting", "diverging", "fluctuating", "emerging", "spreading"],
-    "info": ["trending", "rising", "forming", "detected", "observed"],
-}
-
-_CATEGORY_MAP = {
-    "spike": ("spike", "high"),
-    "shift": ("shift", "moderate"),
-    "warning": ("warning", "high"),
-    "pattern": ("pattern", "info"),
-}
-
-
 def _build_prompt(global_score: float, top_community: str, top_trend: str, emotion: str) -> str:
     mood_label = "positive" if global_score > 0.1 else "negative" if global_score < -0.1 else "mixed"
     return (

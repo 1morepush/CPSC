@@ -1,6 +1,6 @@
 from collections import deque
 from threading import Lock
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 import uuid
 
@@ -20,7 +20,7 @@ class InternetMoodState:
         self.global_mood: GlobalMood = _default_mood()
         self.communities: list[CommunityMood] = []
         self.trends: list[Trend] = []
-        self.insights: list[AIInsight] = deque(maxlen=20)
+        self.insights: deque[AIInsight] = deque(maxlen=20)
         self.network_nodes: list[NetworkNode] = []
         self.network_edges: list[NetworkEdge] = []
 
@@ -100,5 +100,5 @@ def _default_mood() -> GlobalMood:
         volatility=0.3,
         drift=0.0,
         energy_index=50.0,
-        timestamp=datetime.utcnow().isoformat(),
+        timestamp=datetime.now(timezone.utc).isoformat(),
     )
