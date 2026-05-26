@@ -13,10 +13,12 @@ from .api.routes import router
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-USE_DEMO_MODE = os.getenv("USE_DEMO_MODE", "true").lower() != "false"
-
 mood_state = InternetMoodState()
 generator = MoodDataGenerator(mood_state)
+
+# Runtime mode flag — starts from env var, toggled via /api/mode
+_demo_mode: bool = os.getenv("USE_DEMO_MODE", "true").lower() != "false"
+_scraper_task: asyncio.Task | None = None
 
 
 class ConnectionManager:
@@ -47,13 +49,12 @@ manager = ConnectionManager()
 
 
 async def _run_scrapers():
-    """Runs all scrapers on a fixed schedule when USE_DEMO_MODE=false."""
+    """Runs all scrapers on a fixed schedule."""
     from .scrapers import hackernews, newsapi, reddit, mastodon
 
     logger.info("Real-data mode: scrapers starting")
 
-    # Stagger initial runs so they don't all fire at once
-    await asyncio.sleep(5)
+    await asyncio.sleep(3)
     await hackernews.scrape(mood_state)
     await asyncio.sleep(2)
     await mastodon.scrape(mood_state)
@@ -62,11 +63,10 @@ async def _run_scrapers():
     await asyncio.sleep(2)
     await reddit.scrape(mood_state)
 
-    # Intervals
-    HN_INTERVAL      = 5  * 60   # 5 min  — no rate limit
-    MASTODON_INTERVAL = 5  * 60   # 5 min  — no auth, generous limits
-    NEWS_INTERVAL    = 10 * 60   # 10 min — free tier: 100 req/day
-    REDDIT_INTERVAL  = 10 * 60   # 10 min — free tier: 100 QPM OAuth
+    HN_INTERVAL       = 5  * 60
+    MASTODON_INTERVAL = 5  * 60
+    NEWS_INTERVAL     = 10 * 60
+    REDDIT_INTERVAL   = 10 * 60
 
     elapsed = {k: 0 for k in ("hn", "mastodon", "news", "reddit")}
     tick = 30
@@ -93,29 +93,47 @@ async def _run_scrapers():
             elapsed["reddit"] = 0
 
 
+def _start_scrapers():
+    global _scraper_task
+    if _scraper_task and not _scraper_task.done():
+        return
+    _scraper_task = asyncio.create_task(_run_scrapers())
+    logger.info("Mode: LIVE (scrapers started)")
+
+
+def _stop_scrapers():
+    global _scraper_task
+    if _scraper_task and not _scraper_task.done():
+        _scraper_task.cancel()
+        _scraper_task = None
+        mood_state.real_scores.clear()
+        logger.info("Mode: DEMO (scrapers stopped, real_scores cleared)")
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     tasks = [
         asyncio.create_task(generator.run_continuous()),
         asyncio.create_task(_broadcast_loop()),
     ]
-    if not USE_DEMO_MODE:
-        tasks.append(asyncio.create_task(_run_scrapers()))
-        logger.info("Mode: LIVE (real data scrapers enabled)")
-    else:
-        logger.info("Mode: DEMO (simulated data only)")
+    if not _demo_mode:
+        _start_scrapers()
+    logger.info("Mode: %s", "DEMO" if _demo_mode else "LIVE")
 
     yield
 
     for t in tasks:
         t.cancel()
+    _stop_scrapers()
 
 
 async def _broadcast_loop():
     while True:
         try:
             if manager._connections:
-                await manager.broadcast(mood_state.live_update())
+                snapshot = mood_state.live_update()
+                snapshot["demo_mode"] = _demo_mode
+                await manager.broadcast(snapshot)
         except Exception as e:
             logger.warning("Broadcast error: %s", e)
         await asyncio.sleep(2)
@@ -134,11 +152,32 @@ app.state.mood_state = mood_state
 app.include_router(router, prefix="/api")
 
 
+@app.get("/api/mode")
+async def get_mode():
+    return {"demo": _demo_mode}
+
+
+@app.post("/api/mode")
+async def set_mode(body: dict):
+    global _demo_mode
+    new_demo = bool(body.get("demo", True))
+    if new_demo == _demo_mode:
+        return {"demo": _demo_mode, "changed": False}
+    _demo_mode = new_demo
+    if _demo_mode:
+        _stop_scrapers()
+    else:
+        _start_scrapers()
+    return {"demo": _demo_mode, "changed": True}
+
+
 @app.websocket("/ws/feed")
 async def websocket_feed(websocket: WebSocket):
     await manager.connect(websocket)
     try:
-        await websocket.send_json(mood_state.live_update())
+        snapshot = mood_state.live_update()
+        snapshot["demo_mode"] = _demo_mode
+        await websocket.send_json(snapshot)
         while True:
             await asyncio.sleep(30)
     except WebSocketDisconnect:

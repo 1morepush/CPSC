@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import { useMoodData } from "@/hooks/useMoodData";
+import { useMode } from "@/hooks/useMode";
 import GlobalMoodMeter from "@/components/GlobalMoodMeter";
 import EnergyIndex from "@/components/EnergyIndex";
 import LiveFeed from "@/components/LiveFeed";
@@ -38,6 +39,7 @@ import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const data = useMoodData();
+  const { isDemo, toggle, loading } = useMode();
   const statusColor = STATUS_COLORS[data.wsStatus] ?? "#64748b";
 
   return (
@@ -77,6 +79,40 @@ export default function Dashboard() {
 
           <div className="flex items-center gap-4">
             <LiveClock />
+
+            {/* Demo / Live toggle */}
+            <motion.button
+              onClick={toggle}
+              disabled={loading}
+              whileTap={{ scale: 0.95 }}
+              className="relative flex items-center gap-2 px-3 py-1.5 rounded border glass cursor-pointer select-none"
+              style={{
+                borderColor: isDemo ? "#7b2fff55" : "#00d4aa55",
+                opacity: loading ? 0.6 : 1,
+              }}
+              title={isDemo ? "Switch to Live data" : "Switch to Demo mode"}
+            >
+              {/* Track */}
+              <div
+                className="relative w-8 h-4 rounded-full transition-colors duration-300"
+                style={{ backgroundColor: isDemo ? "#7b2fff44" : "#00d4aa44", border: `1px solid ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
+              >
+                <motion.div
+                  className="absolute top-0.5 w-3 h-3 rounded-full"
+                  animate={{ left: isDemo ? "2px" : "17px" }}
+                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  style={{ backgroundColor: isDemo ? "#7b2fff" : "#00d4aa", boxShadow: `0 0 6px ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
+                />
+              </div>
+              <span
+                className="text-[10px] font-display font-bold tracking-widest"
+                style={{ color: isDemo ? "#7b2fff" : "#00d4aa" }}
+              >
+                {loading ? "···" : isDemo ? "DEMO" : "LIVE"}
+              </span>
+            </motion.button>
+
+            {/* WS status */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 glass">
               <motion.div
                 className="w-2 h-2 rounded-full"
