@@ -207,7 +207,12 @@ class MoodDataGenerator:
         for c in COMMUNITIES:
             cid = c["id"]
             drift = random.gauss(0, c["vol"] * 0.05)
-            reversion = (c["base"] - self._community_scores[cid]) * 0.03
+            real = self.state.real_scores.get(cid)
+            if real is not None:
+                # Pull 20% toward the real scraped score each tick
+                reversion = (real - self._community_scores[cid]) * 0.20
+            else:
+                reversion = (c["base"] - self._community_scores[cid]) * 0.03
             self._community_scores[cid] = max(-1.0, min(1.0,
                 self._community_scores[cid] + drift + reversion
             ))

@@ -23,6 +23,8 @@ class InternetMoodState:
         self.insights: deque[AIInsight] = deque(maxlen=20)
         self.network_nodes: list[NetworkNode] = []
         self.network_edges: list[NetworkEdge] = []
+        # Scrapers write live scores here; mock generator blends toward them
+        self.real_scores: dict[str, float] = {}
 
     # ── readers ───────────────────────────────────────────────────────────────
 
