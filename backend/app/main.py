@@ -48,33 +48,49 @@ manager = ConnectionManager()
 
 async def _run_scrapers():
     """Runs all scrapers on a fixed schedule when USE_DEMO_MODE=false."""
-    from .scrapers import hackernews, newsapi
+    from .scrapers import hackernews, newsapi, reddit, mastodon
 
     logger.info("Real-data mode: scrapers starting")
+
     # Stagger initial runs so they don't all fire at once
     await asyncio.sleep(5)
     await hackernews.scrape(mood_state)
-    await asyncio.sleep(3)
+    await asyncio.sleep(2)
+    await mastodon.scrape(mood_state)
+    await asyncio.sleep(2)
     await newsapi.scrape(mood_state)
+    await asyncio.sleep(2)
+    await reddit.scrape(mood_state)
 
-    HN_INTERVAL = 5 * 60      # every 5 minutes
-    NEWS_INTERVAL = 10 * 60   # every 10 minutes (free tier: 100 req/day)
-    hn_elapsed = 0
-    news_elapsed = 0
+    # Intervals
+    HN_INTERVAL      = 5  * 60   # 5 min  — no rate limit
+    MASTODON_INTERVAL = 5  * 60   # 5 min  — no auth, generous limits
+    NEWS_INTERVAL    = 10 * 60   # 10 min — free tier: 100 req/day
+    REDDIT_INTERVAL  = 10 * 60   # 10 min — free tier: 100 QPM OAuth
+
+    elapsed = {k: 0 for k in ("hn", "mastodon", "news", "reddit")}
     tick = 30
 
     while True:
         await asyncio.sleep(tick)
-        hn_elapsed += tick
-        news_elapsed += tick
+        for k in elapsed:
+            elapsed[k] += tick
 
-        if hn_elapsed >= HN_INTERVAL:
+        if elapsed["hn"] >= HN_INTERVAL:
             await hackernews.scrape(mood_state)
-            hn_elapsed = 0
+            elapsed["hn"] = 0
 
-        if news_elapsed >= NEWS_INTERVAL:
+        if elapsed["mastodon"] >= MASTODON_INTERVAL:
+            await mastodon.scrape(mood_state)
+            elapsed["mastodon"] = 0
+
+        if elapsed["news"] >= NEWS_INTERVAL:
             await newsapi.scrape(mood_state)
-            news_elapsed = 0
+            elapsed["news"] = 0
+
+        if elapsed["reddit"] >= REDDIT_INTERVAL:
+            await reddit.scrape(mood_state)
+            elapsed["reddit"] = 0
 
 
 @asynccontextmanager
