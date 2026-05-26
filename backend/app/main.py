@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
@@ -11,6 +12,8 @@ from .api.routes import router
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+USE_DEMO_MODE = os.getenv("USE_DEMO_MODE", "true").lower() != "false"
 
 mood_state = InternetMoodState()
 generator = MoodDataGenerator(mood_state)
@@ -43,13 +46,53 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 
+async def _run_scrapers():
+    """Runs all scrapers on a fixed schedule when USE_DEMO_MODE=false."""
+    from .scrapers import hackernews, newsapi
+
+    logger.info("Real-data mode: scrapers starting")
+    # Stagger initial runs so they don't all fire at once
+    await asyncio.sleep(5)
+    await hackernews.scrape(mood_state)
+    await asyncio.sleep(3)
+    await newsapi.scrape(mood_state)
+
+    HN_INTERVAL = 5 * 60      # every 5 minutes
+    NEWS_INTERVAL = 10 * 60   # every 10 minutes (free tier: 100 req/day)
+    hn_elapsed = 0
+    news_elapsed = 0
+    tick = 30
+
+    while True:
+        await asyncio.sleep(tick)
+        hn_elapsed += tick
+        news_elapsed += tick
+
+        if hn_elapsed >= HN_INTERVAL:
+            await hackernews.scrape(mood_state)
+            hn_elapsed = 0
+
+        if news_elapsed >= NEWS_INTERVAL:
+            await newsapi.scrape(mood_state)
+            news_elapsed = 0
+
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    gen_task = asyncio.create_task(generator.run_continuous())
-    broadcast_task = asyncio.create_task(_broadcast_loop())
+    tasks = [
+        asyncio.create_task(generator.run_continuous()),
+        asyncio.create_task(_broadcast_loop()),
+    ]
+    if not USE_DEMO_MODE:
+        tasks.append(asyncio.create_task(_run_scrapers()))
+        logger.info("Mode: LIVE (real data scrapers enabled)")
+    else:
+        logger.info("Mode: DEMO (simulated data only)")
+
     yield
-    gen_task.cancel()
-    broadcast_task.cancel()
+
+    for t in tasks:
+        t.cancel()
 
 
 async def _broadcast_loop():
@@ -79,10 +122,8 @@ app.include_router(router, prefix="/api")
 async def websocket_feed(websocket: WebSocket):
     await manager.connect(websocket)
     try:
-        # Send initial snapshot immediately
         await websocket.send_json(mood_state.live_update())
         while True:
-            # Keep alive — actual data is pushed from broadcast_loop
             await asyncio.sleep(30)
     except WebSocketDisconnect:
         manager.disconnect(websocket)
