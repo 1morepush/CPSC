@@ -1,8 +1,9 @@
 "use client";
 
 import dynamic from "next/dynamic";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { useMoodData } from "@/hooks/useMoodData";
+import { useMoodData, CLIENT_DEMO } from "@/hooks/useMoodData";
 import { useMode } from "@/hooks/useMode";
 import GlobalMoodMeter from "@/components/GlobalMoodMeter";
 import EnergyIndex from "@/components/EnergyIndex";
@@ -33,9 +34,6 @@ function LiveClock() {
   }, []);
   return <span className="font-mono text-[11px] text-white/40">{time}</span>;
 }
-
-// useState/useEffect need to be imported separately for LiveClock
-import { useState, useEffect } from "react";
 
 export default function Dashboard() {
   const data = useMoodData();
@@ -80,37 +78,39 @@ export default function Dashboard() {
           <div className="flex items-center gap-4">
             <LiveClock />
 
-            {/* Demo / Live toggle */}
-            <motion.button
-              onClick={toggle}
-              disabled={loading}
-              whileTap={{ scale: 0.95 }}
-              className="relative flex items-center gap-2 px-3 py-1.5 rounded border glass cursor-pointer select-none"
-              style={{
-                borderColor: isDemo ? "#7b2fff55" : "#00d4aa55",
-                opacity: loading ? 0.6 : 1,
-              }}
-              title={isDemo ? "Switch to Live data" : "Switch to Demo mode"}
-            >
-              {/* Track */}
-              <div
-                className="relative w-8 h-4 rounded-full transition-colors duration-300"
-                style={{ backgroundColor: isDemo ? "#7b2fff44" : "#00d4aa44", border: `1px solid ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
+            {/* Demo / Live toggle (hidden in standalone demo mode — no backend) */}
+            {!CLIENT_DEMO && (
+              <motion.button
+                onClick={toggle}
+                disabled={loading}
+                whileTap={{ scale: 0.95 }}
+                className="relative flex items-center gap-2 px-3 py-1.5 rounded border glass cursor-pointer select-none"
+                style={{
+                  borderColor: isDemo ? "#7b2fff55" : "#00d4aa55",
+                  opacity: loading ? 0.6 : 1,
+                }}
+                title={isDemo ? "Switch to Live data" : "Switch to Demo mode"}
               >
-                <motion.div
-                  className="absolute top-0.5 w-3 h-3 rounded-full"
-                  animate={{ left: isDemo ? "2px" : "17px" }}
-                  transition={{ type: "spring", stiffness: 500, damping: 30 }}
-                  style={{ backgroundColor: isDemo ? "#7b2fff" : "#00d4aa", boxShadow: `0 0 6px ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
-                />
-              </div>
-              <span
-                className="text-[10px] font-display font-bold tracking-widest"
-                style={{ color: isDemo ? "#7b2fff" : "#00d4aa" }}
-              >
-                {loading ? "···" : isDemo ? "DEMO" : "LIVE"}
-              </span>
-            </motion.button>
+                {/* Track */}
+                <div
+                  className="relative w-8 h-4 rounded-full transition-colors duration-300"
+                  style={{ backgroundColor: isDemo ? "#7b2fff44" : "#00d4aa44", border: `1px solid ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
+                >
+                  <motion.div
+                    className="absolute top-0.5 w-3 h-3 rounded-full"
+                    animate={{ left: isDemo ? "2px" : "17px" }}
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    style={{ backgroundColor: isDemo ? "#7b2fff" : "#00d4aa", boxShadow: `0 0 6px ${isDemo ? "#7b2fff" : "#00d4aa"}` }}
+                  />
+                </div>
+                <span
+                  className="text-[10px] font-display font-bold tracking-widest"
+                  style={{ color: isDemo ? "#7b2fff" : "#00d4aa" }}
+                >
+                  {loading ? "···" : isDemo ? "DEMO" : "LIVE"}
+                </span>
+              </motion.button>
+            )}
 
             {/* WS status */}
             <div className="flex items-center gap-2 px-3 py-1.5 rounded border border-white/10 glass">
@@ -166,7 +166,7 @@ export default function Dashboard() {
             <div>
               <p className="section-header mb-2">Data Sources</p>
               <div className="flex flex-wrap gap-1.5">
-                {["Reddit","Twitter/X","YouTube","News API","Google Trends"].map(p => (
+                {["Hacker News","Mastodon","Reddit","NewsAPI","Simulation"].map(p => (
                   <span
                     key={p}
                     className="text-[8px] font-display font-bold tracking-wider px-2 py-1 rounded border border-cyber-cyan/20 text-cyber-cyan/60"
