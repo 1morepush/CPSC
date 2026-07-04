@@ -1,14 +1,18 @@
 import asyncio
+import contextlib
 import logging
 import os
 from contextlib import asynccontextmanager
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 from .state import InternetMoodState
 from .mock_generator import MoodDataGenerator
 from .api.routes import router
+
+load_dotenv()
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -18,6 +22,7 @@ generator = MoodDataGenerator(mood_state)
 
 # Runtime mode flag — starts from env var, toggled via /api/mode
 _demo_mode: bool = os.getenv("USE_DEMO_MODE", "true").lower() != "false"
+mood_state.demo_mode = _demo_mode
 _scraper_task: asyncio.Task | None = None
 
 
@@ -101,11 +106,14 @@ def _start_scrapers():
     logger.info("Mode: LIVE (scrapers started)")
 
 
-def _stop_scrapers():
+async def _stop_scrapers():
     global _scraper_task
     if _scraper_task and not _scraper_task.done():
-        _scraper_task.cancel()
+        task = _scraper_task
         _scraper_task = None
+        task.cancel()
+        with contextlib.suppress(asyncio.CancelledError):
+            await task
         mood_state.real_scores.clear()
         logger.info("Mode: DEMO (scrapers stopped, real_scores cleared)")
 
@@ -124,7 +132,7 @@ async def lifespan(app: FastAPI):
 
     for t in tasks:
         t.cancel()
-    _stop_scrapers()
+    await _stop_scrapers()
 
 
 async def _broadcast_loop():
@@ -164,8 +172,9 @@ async def set_mode(body: dict):
     if new_demo == _demo_mode:
         return {"demo": _demo_mode, "changed": False}
     _demo_mode = new_demo
+    mood_state.demo_mode = new_demo
     if _demo_mode:
-        _stop_scrapers()
+        await _stop_scrapers()
     else:
         _start_scrapers()
     return {"demo": _demo_mode, "changed": True}

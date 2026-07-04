@@ -150,7 +150,10 @@ class MoodDataGenerator:
         while True:
             self._tick += 1
             self._maybe_trigger_event()
-            self._generate_posts(count=random.randint(2, 4))
+            if self.state.demo_mode:
+                # In live mode the feed carries real scraped posts only —
+                # fabricated ones would flush them out of the window
+                self._generate_posts(count=random.randint(2, 4))
 
             if self._tick % 5 == 0:
                 self._update_community_scores()

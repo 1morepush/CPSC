@@ -39,6 +39,7 @@ _POSTS_PER_TAG = 20
 async def scrape(state: InternetMoodState) -> None:
     now = datetime.now(timezone.utc).isoformat()
     community_scores: dict[str, list[float]] = {}
+    non_200_logged = False
 
     async with httpx.AsyncClient(timeout=10.0) as client:
         for tag, community_id in TAG_MAP.items():
@@ -71,6 +72,16 @@ async def scrape(state: InternetMoodState) -> None:
                     community_scores.setdefault(community_id, []).extend(scores)
                     logger.debug("Mastodon #%s: %d posts", tag, len(scores))
 
+            except httpx.HTTPStatusError as exc:
+                # Some instances restrict unauthenticated timelines — surface once per run
+                if not non_200_logged:
+                    logger.info(
+                        "Mastodon: %s returned HTTP %d for tag timelines "
+                        "(instance may restrict unauthenticated access)",
+                        INSTANCE, exc.response.status_code,
+                    )
+                    non_200_logged = True
+                logger.warning("Mastodon #%s failed: %s", tag, exc)
             except Exception as exc:
                 logger.warning("Mastodon #%s failed: %s", tag, exc)
 
