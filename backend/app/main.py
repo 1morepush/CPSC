@@ -112,8 +112,10 @@ async def _stop_scrapers():
         task = _scraper_task
         _scraper_task = None
         task.cancel()
-        with contextlib.suppress(asyncio.CancelledError):
-            await task
+        # An in-flight threaded PRAW fetch can't be interrupted — don't let it
+        # hold up the /api/mode response for more than a few seconds
+        with contextlib.suppress(asyncio.CancelledError, asyncio.TimeoutError):
+            await asyncio.wait_for(task, timeout=10)
         mood_state.real_scores.clear()
         logger.info("Mode: DEMO (scrapers stopped, real_scores cleared)")
 
@@ -165,18 +167,22 @@ async def get_mode():
     return {"demo": _demo_mode}
 
 
+_mode_lock = asyncio.Lock()
+
+
 @app.post("/api/mode")
 async def set_mode(body: dict):
     global _demo_mode
     new_demo = bool(body.get("demo", True))
-    if new_demo == _demo_mode:
-        return {"demo": _demo_mode, "changed": False}
-    _demo_mode = new_demo
-    mood_state.demo_mode = new_demo
-    if _demo_mode:
-        await _stop_scrapers()
-    else:
-        _start_scrapers()
+    async with _mode_lock:
+        if new_demo == _demo_mode:
+            return {"demo": _demo_mode, "changed": False}
+        _demo_mode = new_demo
+        mood_state.demo_mode = new_demo
+        if _demo_mode:
+            await _stop_scrapers()
+        else:
+            _start_scrapers()
     return {"demo": _demo_mode, "changed": True}
 
 
