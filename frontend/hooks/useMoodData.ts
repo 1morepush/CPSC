@@ -59,7 +59,7 @@ export function useMoodData(): MoodData {
       liveFeed: [...newPosts, ...prev.liveFeed].slice(0, 60),
       trends: (msg.trends as Trend[]) ?? prev.trends,
       insights:
-        latestInsight && latestInsight.id !== prev.insights[0]?.id
+        latestInsight && !prev.insights.some((i) => i.id === latestInsight.id)
           ? [latestInsight, ...prev.insights].slice(0, 20)
           : prev.insights,
       history: (msg.history as MoodHistoryPoint[]) ?? prev.history,
