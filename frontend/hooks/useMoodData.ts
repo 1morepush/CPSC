@@ -13,9 +13,11 @@ const WS_URL = process.env.NEXT_PUBLIC_WS_URL
   ? `${process.env.NEXT_PUBLIC_WS_URL}/ws/feed`
   : "ws://localhost:8000/ws/feed";
 
-const DEMO_MODE =
+export const CLIENT_DEMO =
   process.env.NEXT_PUBLIC_API_URL === undefined ||
   process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
+const DEMO_MODE = CLIENT_DEMO;
 
 export interface MoodData {
   globalMood: GlobalMood | null;
@@ -44,22 +46,28 @@ export function useMoodData(): MoodData {
 
   const handleMessage = useCallback((msg: Record<string, unknown>) => {
     if (msg.type !== "live_update") return;
-    setData((prev) => ({
+    setData((prev) => {
+      // Each broadcast repeats the latest posts/insight — dedup by id
+      const seen = new Set(prev.liveFeed.map((p) => p.id));
+      const newPosts = ((msg.latest_posts as LivePost[]) ?? []).filter(
+        (p) => !seen.has(p.id)
+      );
+      const latestInsight = msg.latest_insight as AIInsight | undefined;
+      return {
       globalMood: (msg.global_mood as GlobalMood) ?? prev.globalMood,
       communities: (msg.communities as CommunityMood[]) ?? prev.communities,
-      liveFeed: [
-        ...((msg.latest_posts as LivePost[]) ?? []),
-        ...prev.liveFeed,
-      ].slice(0, 60),
+      liveFeed: [...newPosts, ...prev.liveFeed].slice(0, 60),
       trends: (msg.trends as Trend[]) ?? prev.trends,
-      insights: msg.latest_insight
-        ? [msg.latest_insight as AIInsight, ...prev.insights].slice(0, 20)
-        : prev.insights,
+      insights:
+        latestInsight && !prev.insights.some((i) => i.id === latestInsight.id)
+          ? [latestInsight, ...prev.insights].slice(0, 20)
+          : prev.insights,
       history: (msg.history as MoodHistoryPoint[]) ?? prev.history,
       networkNodes: (msg.network_nodes as NetworkNode[]) ?? prev.networkNodes,
       networkEdges: (msg.network_edges as NetworkEdge[]) ?? prev.networkEdges,
-      wsStatus: "connected",
-    }));
+      wsStatus: "connected" as const,
+      };
+    });
   }, []);
 
   const { status } = useWebSocket<Record<string, unknown>>(WS_URL, handleMessage);

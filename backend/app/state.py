@@ -25,6 +25,9 @@ class InternetMoodState:
         self.network_edges: list[NetworkEdge] = []
         # Scrapers write live scores here; mock generator blends toward them
         self.real_scores: dict[str, float] = {}
+        # Mirrors the runtime demo/live toggle; in live mode the generator
+        # stops fabricating feed posts so scraped ones stay visible
+        self.demo_mode: bool = True
 
     # ── readers ───────────────────────────────────────────────────────────────
 

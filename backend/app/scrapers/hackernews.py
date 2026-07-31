@@ -19,8 +19,8 @@ from ..state import InternetMoodState
 
 logger = logging.getLogger(__name__)
 
-_TOP_URL = "https://hacker-news.firebaseio.com/v1/topstories.json"
-_ITEM_URL = "https://hacker-news.firebaseio.com/v1/item/{}.json"
+_TOP_URL = "https://hacker-news.firebaseio.com/v0/topstories.json"
+_ITEM_URL = "https://hacker-news.firebaseio.com/v0/item/{}.json"
 
 # Communities that HN data feeds into
 COMMUNITIES = ("technology", "science", "techtwitter")

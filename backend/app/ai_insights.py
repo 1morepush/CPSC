@@ -1,5 +1,6 @@
 """
-AI-powered insight generation via HuggingFace free Inference API.
+AI-powered insight generation via the HuggingFace Inference Providers router
+(OpenAI-compatible chat completions API).
 Falls back to template rotation when HF_TOKEN is not set.
 
 Get a free token at https://huggingface.co/settings/tokens
@@ -13,11 +14,8 @@ import httpx
 
 logger = logging.getLogger(__name__)
 
-HF_TOKEN = os.getenv("HF_TOKEN", "")
-HF_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
-HF_URL = f"https://api-inference.huggingface.co/models/{HF_MODEL}"
-
-_HEADERS = {"Authorization": f"Bearer {HF_TOKEN}"} if HF_TOKEN else {}
+HF_MODEL = "meta-llama/Llama-3.2-3B-Instruct"
+HF_URL = "https://router.huggingface.co/v1/chat/completions"
 
 # Fallback templates used when HF_TOKEN is absent or the API call fails
 _FALLBACK_TEMPLATES = [
@@ -41,12 +39,12 @@ _FALLBACK_TEMPLATES = [
 def _build_prompt(global_score: float, top_community: str, top_trend: str, emotion: str) -> str:
     mood_label = "positive" if global_score > 0.1 else "negative" if global_score < -0.1 else "mixed"
     return (
-        f"[INST] You are an AI analyst monitoring real-time internet sentiment. "
+        f"You are an AI analyst monitoring real-time internet sentiment. "
         f"Current data: global mood is {mood_label} ({global_score:+.2f}), "
         f"emotion: {emotion}, most active community: {top_community}, "
         f"top trend: {top_trend}. "
         f"Write ONE short (max 20 words) sharp analytical insight about what's happening "
-        f"on the internet right now. Be specific and punchy. No hashtags. [/INST]"
+        f"on the internet right now. Be specific and punchy. No hashtags."
     )
 
 
@@ -68,7 +66,8 @@ async def generate_insight(
     emotion: str,
 ) -> tuple[str, str, str]:
     """Return (text, category, severity). Never raises."""
-    if not HF_TOKEN:
+    hf_token = os.getenv("HF_TOKEN", "")
+    if not hf_token:
         tmpl, cat, sev = random.choice(_FALLBACK_TEMPLATES)
         return tmpl, cat, sev
 
@@ -77,32 +76,25 @@ async def generate_insight(
         async with httpx.AsyncClient(timeout=10.0) as client:
             resp = await client.post(
                 HF_URL,
-                headers=_HEADERS,
+                headers={"Authorization": f"Bearer {hf_token}"},
                 json={
-                    "inputs": prompt,
-                    "parameters": {
-                        "max_new_tokens": 60,
-                        "temperature": 0.75,
-                        "return_full_text": False,
-                        "do_sample": True,
-                    },
+                    "model": HF_MODEL,
+                    "messages": [{"role": "user", "content": prompt}],
+                    "max_tokens": 60,
+                    "temperature": 0.75,
                 },
             )
-            if resp.status_code == 503:
-                # Model is loading — use fallback silently
+            if resp.status_code != 200:
+                # Rate limit, missing credits, model unavailable — fall back silently
+                logger.debug("HuggingFace router returned %d, using fallback", resp.status_code)
                 tmpl, cat, sev = random.choice(_FALLBACK_TEMPLATES)
                 return tmpl, cat, sev
 
-            resp.raise_for_status()
             data = resp.json()
-            if isinstance(data, list) and data:
-                text = data[0].get("generated_text", "").strip()
-                # Strip any residual [INST] tags the model echoes back
-                for tag in ("[INST]", "[/INST]", "</s>"):
-                    text = text.replace(tag, "").strip()
-                if len(text) > 15:
-                    cat, sev = _classify(text)
-                    return text[:200], cat, sev
+            text = data["choices"][0]["message"]["content"].strip()
+            if len(text) > 15:
+                cat, sev = _classify(text)
+                return text[:200], cat, sev
     except Exception as exc:
         logger.debug("HuggingFace insight failed (%s), using fallback", exc)
 

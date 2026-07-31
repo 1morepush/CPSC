@@ -9,6 +9,7 @@ Register a free "script" app at https://www.reddit.com/prefs/apps
 (use http://localhost:8080 as the redirect URI — it's never called).
 """
 
+import asyncio
 import logging
 import os
 import uuid
@@ -61,7 +62,9 @@ async def scrape(state: InternetMoodState) -> None:
 
     for sub_name, community_id in SUBREDDIT_MAP.items():
         try:
-            posts_data = _fetch_subreddit(reddit, sub_name)
+            # PRAW is synchronous (blocking requests under the hood) — run it in
+            # a thread so the event loop stays responsive between subreddits.
+            posts_data = await asyncio.to_thread(_fetch_subreddit, reddit, sub_name)
             if not posts_data:
                 continue
 
