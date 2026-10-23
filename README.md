@@ -1,14 +1,35 @@
 # Carolina Pulmonary & Sleep Clinic: website redesign
 
 A modern, mobile-friendly redesign of [carysleep.com](https://carysleep.com/), the website of
-Carolina Pulmonary & Sleep Clinic (Dr. Priyan Samarakoon, MD) in Cary, North Carolina.
+Carolina Pulmonary & Sleep Clinic (Dr. Priyan Samarakoon, MD) in Cary, North Carolina, with a light and a
+dark theme.
 
 It is a plain static site (HTML, one stylesheet and one script) with no build step and no dependencies.
 Every page keeps its original file name, so links to the current site keep working once it is uploaded.
 
-![The home page on a desktop browser](docs/screenshots/home-desktop.jpg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/home-desktop-dark.jpg">
+  <img src="docs/screenshots/home-desktop.jpg" alt="The home page on a desktop browser">
+</picture>
 
-![The home page, the COPD page and the menu on a phone](docs/screenshots/phones.jpg)
+## Demo
+
+Click a preview to open the full video.
+
+**On a laptop:** the hero, scroll and hover effects, the dropdown menu and a page transition
+([video, 38 s](docs/demo/desktop.mp4)).
+
+[![Scrolling the home page and opening the Sleep Apnea page on a laptop](docs/demo/desktop.gif)](docs/demo/desktop.mp4)
+
+**Dark mode:** the switch in the header, the home page and the Directions page in the dark theme
+([video, 31 s](docs/demo/dark-mode.mp4)).
+
+[![Switching to the dark theme and browsing the site](docs/demo/dark-mode.gif)](docs/demo/dark-mode.mp4)
+
+**On a phone:** the menu, the quick-action bar and the section chips on the COPD page
+([video, 27 s](docs/demo/phone.mp4)).
+
+[![Using the menu and the COPD page on a phone](docs/demo/phone.gif)](docs/demo/phone.mp4)
 
 ## Highlights
 
@@ -17,6 +38,9 @@ Every page keeps its original file name, so links to the current site keep worki
   [docs/text-corrections.md](docs/text-corrections.md).
 - **New look.** A night-sky hero with drifting stars and a glowing moon, the logo's purple carried through
   the whole site, and Fraunces and Plus Jakarta Sans type.
+- **Light and dark.** A sun/moon switch in the header turns on the dark theme. Pages follow the device's
+  light or dark setting until a visitor picks one, then remember the choice. Printing always uses the
+  light theme.
 - **Motion with restraint.** Sections rise into view as you scroll, cards respond to the cursor, and pages
   cross-fade in browsers that support it. Motion switches off for visitors who turn on "reduce motion" on
   their device, and decorative loops pause while they are off screen.
@@ -24,11 +48,25 @@ Every page keeps its original file name, so links to the current site keep worki
   screen, and swipeable section chips that follow along as you read. Nothing scrolls sideways, from 320 px
   phones up to tablets.
 - **Fast and accessible.** WebP images, self-hosted fonts, and analytics that load after the page.
-  Lighthouse (mobile, seven pages): Performance 96–98, Accessibility 100, Best Practices 96–100, SEO 100.
+  Lighthouse (mobile): Performance 94–98, Accessibility 100, Best Practices 96–100, SEO 91–100. An
+  axe-core scan (WCAG A/AA rules) reports no violations in either theme.
 
-![The Patient Services section of the home page](docs/screenshots/services-desktop.jpg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/phones-dark.jpg">
+  <img src="docs/screenshots/phones.jpg" alt="The home page, the COPD page and the menu on a phone">
+</picture>
 
-![The Sleep Apnea page](docs/screenshots/sleep-apnea-desktop.jpg)
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/services-desktop-dark.jpg">
+  <img src="docs/screenshots/services-desktop.jpg" alt="The Patient Services section of the home page">
+</picture>
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="docs/screenshots/sleep-apnea-desktop-dark.jpg">
+  <img src="docs/screenshots/sleep-apnea-desktop.jpg" alt="The Sleep Apnea page">
+</picture>
+
+Screenshots follow your GitHub theme: switch GitHub to dark mode to see the dark versions.
 
 ## Pages
 
@@ -70,9 +108,11 @@ Pages (publish directory: `carysleep-redesign`).
 
 - Each page is a self-contained HTML file. The header, menu and footer are repeated in every page, so a
   change there (a new phone number, say) is a find-and-replace across the 20 files.
-- Styles are in `css/site.css`, with the colors and fonts defined as variables at the top. Menus, scroll
-  effects and animations are in `js/site.js`.
-- Each photo in `images/` has a `.webp` copy next to it; replace both when swapping a photo.
+- Styles are in `css/site.css`. Colors and fonts are variables at the top: the light theme in `:root`
+  and the dark theme in `:root[data-theme="dark"]`. Menus, scroll effects, animations and the theme switch
+  are in `js/site.js`.
+- Each photo in `images/` has a `.webp` copy next to it; replace both when swapping a photo. The logo has
+  a second version with a light wordmark (`logo-dark.png` / `.webp`) for the dark theme.
 
 ## Before going live
 
@@ -84,6 +124,8 @@ Pages (publish directory: `carysleep-redesign`).
 - **Patient forms password:** some forms open after a password prompt carried over from the old site. The
   check runs in the browser and the password is visible in the page source, so it only deters casual
   visitors.
+- **"read more" links:** the six "read more" links on the home page keep the old site's wording. Search
+  engines prefer link text that says where a link goes, which is why the home page scores 91 for SEO.
 - **Content to review:** a few medical statements look out of date (lung cancer screening, COPD
   statistics). They are listed at the end of [docs/text-corrections.md](docs/text-corrections.md).
 
@@ -92,13 +134,14 @@ Pages (publish directory: `carysleep-redesign`).
 ```text
 carysleep-redesign/
 ├── *.html            20 pages, named as on carysleep.com
-├── css/site.css      all styles
-├── js/site.js        menu, scroll effects and animations
+├── css/site.css      all styles, light and dark
+├── js/site.js        menu, scroll effects, animations, theme switch
 ├── fonts/            Fraunces and Plus Jakarta Sans, with their licenses
 ├── images/           photos and icons, each with a WebP copy
 └── pdf/              patient forms
 docs/
-├── screenshots/      images used in this README
+├── demo/             demo videos (MP4) and their previews (GIF)
+├── screenshots/      images used in this README, light and dark
 └── text-corrections.md
 ```
 
