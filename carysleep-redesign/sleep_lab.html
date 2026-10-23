@@ -2,23 +2,30 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Welcome to Carolina Pulmonary &amp; Sleep Clinic, the office of Priyan Samarakoon MD. We provide comprehensive clinical care for the full range of Pulmonary, Critical Care and Sleep disorders in both in-patient and out-patient setting. ">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Welcome to Carolina Pulmonary &amp; Sleep Clinic, the office of Priyan Samarakoon MD. We provide comprehensive clinical care for the full range of Pulmonary, Critical Care and Sleep disorders in both in-patient and out-patient settings. ">
 <meta name="theme-color" content="#241a4d">
 <title>Carolina Pulmonary & Sleep Clinic</title>
 <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" sizes="192x192" href="images/icon-192.png">
+<link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+<link rel="preload" href="fonts/plus-jakarta-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>document.documentElement.classList.add("js");setTimeout(function(){if(!window.__siteReady)document.documentElement.classList.add("no-reveal")},2500);</script>
 <link href="css/site.css" rel="stylesheet">
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135206279-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'UA-135206279-1');
+  // the tag queues hits above; load it once the page has rendered so phones paint first
+  window.addEventListener("load", function () {
+    var s = document.createElement("script");
+    s.async = true;
+    s.src = "https://www.googletagmanager.com/gtag/js?id=UA-135206279-1";
+    document.head.appendChild(s);
+  });
 </script>
 </head>
 <body class="inner">
@@ -26,7 +33,7 @@
 
 <div class="topbar">
   <div class="container">
-    <p><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Carolina Pulmonary &amp; Sleep Clinic, <a href="https://goo.gl/maps/b3Ve1hLwKBF2" target="_blank" rel="noopener">570 New Waverly place, Suite 140,</a> Cary, NC 27518</span></p>
+    <p><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span><span class="tb-name">Carolina Pulmonary &amp; Sleep Clinic, </span><a href="https://goo.gl/maps/b3Ve1hLwKBF2" target="_blank" rel="noopener">570 New Waverly Place, Suite 140,</a> Cary, NC 27518</span></p>
     <ul class="social">
       <li><a href="#" aria-label="Facebook"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a></li>
       <li><a href="#" aria-label="Twitter"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg></a></li>
@@ -36,10 +43,10 @@
 </div>
 <header class="site-header" id="site-header">
   <div class="container header-main">
-    <a class="logo" href="index.html"><img src="images/logo.png" alt="Carolina Pulmonary &amp; Sleep Clinic" width="609" height="165"></a>
+    <a class="logo" href="index.html"><picture><source srcset="images/logo.webp" type="image/webp"><img src="images/logo.png" alt="Carolina Pulmonary &amp; Sleep Clinic" width="609" height="165"></picture></a>
     <div class="header-phone">
       <span class="bubble"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-      <div><h4>Phone Number</h4><p>(919) 439 8580</p></div>
+      <div><h4>Phone Number</h4><p><a href="tel:+19194398580">(919) 439 8580</a></p></div>
     </div>
     <div class="header-cta">
       <a class="btn btn-outline" href="patient_forms.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Patient Forms</a>
@@ -58,10 +65,10 @@
     <button type="button" aria-expanded="false">Patient Education <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
     <ul class="submenu">
       <li style="--n:0"><a href="pulmonolgist.html">Pulmonologist</a></li>
-      <li class="has-sub" style="--n:1"><a href="pulmonary_medicine.html">Pulmonary medicine <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
-        <ul class="submenu"><li style="--n:0"><a href="asthma.html">Asthma</a></li><li style="--n:1"><a href="COPD.html">COPD</a></li><li style="--n:2"><a href="sarcoidosis.html">Sarcoidosis</a></li><li style="--n:3"><a href="lung_cancer.html">Lung Cancer</a></li><li style="--n:4"><a href="bronchoscopy.html">bronchoscopy</a></li></ul></li>
+      <li class="has-sub" style="--n:1"><a href="pulmonary_medicine.html">Pulmonary Medicine <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
+        <ul class="submenu"><li style="--n:0"><a href="asthma.html">Asthma</a></li><li style="--n:1"><a href="COPD.html">COPD</a></li><li style="--n:2"><a href="sarcoidosis.html">Sarcoidosis</a></li><li style="--n:3"><a href="lung_cancer.html">Lung Cancer</a></li><li style="--n:4"><a href="bronchoscopy.html">Bronchoscopy</a></li></ul></li>
       <li class="has-sub" style="--n:2"><a href="sleep_medicine.html">Sleep Medicine <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></a>
-        <ul class="submenu"><li style="--n:0"><a href="insomnia.html">Insomnia</a></li><li style="--n:1"><a href="narcolepsy.html">Narcolepsy</a></li><li style="--n:2"><a href="restless-legs-syndrome.html">Restless legs syndrome</a></li><li style="--n:3"><a href="parasomnia.html">Parasmonia</a></li><li style="--n:4"><a href="sleep_apnea.html">Sleep Apnea</a></li></ul></li>
+        <ul class="submenu"><li style="--n:0"><a href="insomnia.html">Insomnia</a></li><li style="--n:1"><a href="narcolepsy.html">Narcolepsy</a></li><li style="--n:2"><a href="restless-legs-syndrome.html">Restless Legs Syndrome</a></li><li style="--n:3"><a href="parasomnia.html">Parasomnia</a></li><li style="--n:4"><a href="sleep_apnea.html">Sleep Apnea</a></li></ul></li>
     </ul>
   </li>
   <li style="--n:4"><a href="new_patients.html">New Patients</a></li>
@@ -73,6 +80,7 @@
         <button type="submit" aria-label="Search"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></button>
       </form>
       <div class="mobile-cta">
+        <a class="menu-phone" href="tel:+19194398580"><span class="bubble"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><span><small>Phone Number</small>(919) 439 8580</span></a>
         <a class="btn btn-outline btn-block" href="patient_forms.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Patient Forms</a>
         <a class="btn btn-primary btn-block" href="https://mycw24.eclinicalweb.com/portal2109/jsp/100mp/login_otp.jsp" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Patient Portal</a>
       </div>
@@ -93,11 +101,11 @@
 </svg>
 </section><section class="page-body"><div class="container layout">
 <article class="prose"><span id="hpss"></span>
-<h3 class="reveal">(A) How to prepare for the sleep study?</h3><span class="subtitle reveal">(Polysomnography)</span>
+<h2 class="lv3 reveal">(A) How to prepare for the sleep study?</h2><span class="subtitle reveal">(Polysomnography)</span>
 <div class="card reveal">
 
 
-<h4>1. On the day of your study:</h4>
+<h3 class="lv4">1. On the day of your study:</h3>
 <ul>
 <li>Try to follow your regular
                                         routine as much as possible</li>
@@ -106,7 +114,7 @@
 <li> Eat your regular evening
                                         meal before you arrive at the Sleep Laboratory.</li>
 <li> The arrival time is
-                                        usually 8.30 - 9PM</li>
+                                        usually 8:30 - 9 PM</li>
 <li> Make sure that your hair
                                         is free of oil, hair spray, and other hair products.</li>
 </ul>
@@ -116,13 +124,12 @@
 <div class="card reveal">
 
 
-<h4>2. What to bring:</h4>
+<h3 class="lv4">2. What to bring:</h3>
 <ul>
 <li>Your regularly scheduled
                                         medications and plan to take them as you normally would unless your physician
                                         instructs otherwise.</li>
-<li>Comfortable sleep attire /
-                                        Pajama (avoid silk).</li>
+<li>Comfortable sleep attire / pajamas (avoid silk).</li>
 <li> Toothpaste / toothbrush</li>
 <li> Makeup remover</li>
 <li> Reading material</li>
@@ -137,7 +144,7 @@
 <div class="card reveal">
 
 
-<h4>3. Who needs to be accompanied:</h4>
+<h3 class="lv4">3. Who needs to be accompanied:</h3>
 <ul>
 <li>If you are under 18 years
                                         of age, a parent or guardian is required to stay with you in the Sleep Lab for
@@ -152,13 +159,13 @@
 <div class="card reveal">
 
 
-<h4>4. In an emergency or cancellations:</h4>
+<h3 class="lv4">4. In an emergency or cancellations:</h3>
 <ul>
 <li>If you cannot keep the
-                                        appointment, to avoid a cancellation fee, call the office (919) 439 8580 at
+                                        appointment, to avoid a cancellation fee, call the office <a href="tel:+19194398580">(919) 439 8580</a> at
                                         least 48 hours in advance to cancel or reschedule.</li>
 <li>If you have an emergency
-                                        and need to notify us after hours (After 5pm), please call the sleep
+                                        and need to notify us after hours (after 5 PM), please call the sleep
                                         technician, by dialing the number provided at the time of scheduling the study.</li>
 </ul>
 
@@ -166,8 +173,8 @@
 </div>
 <span id="hssp"></span>
 
-<h3 class="reveal">(B) How the sleep study is performed ?</h3>
-<p class="reveal">When you are ready to go to bed, The Registered Polysomnographer (sleep technician) will
+<h2 class="lv3 reveal">(B) How the sleep study is performed?</h2>
+<p class="reveal">When you are ready to go to bed, the Registered Polysomnographer (sleep technician) will
                             place
                             electrodes on your chin, scalp, outer edge of your eyelids, and legs. Monitors that record
                             your
@@ -212,7 +219,7 @@
                             complete once you are awake and the sensors have been removed.</p>
 
 <span id="wssp"></span>
-<h3 class="reveal">(C) Why sleep studies are performed ? </h3>
+<h2 class="lv3 reveal">(C) Why sleep studies are performed? </h2>
 <div class="card reveal">
 <p> The test is done to diagnose possible sleep disorders, including: </p>
 <ul>
@@ -222,38 +229,47 @@
                                 breathing difficulties during sleep</li>
 <li> Insomnia</li>
 <li> Narcolepsy</li>
-<li> Periodic limb movements disorder
+<li> Periodic limb movement disorder
                                 (frequent movements of the legs during sleep)</li>
 <li> REM behavior disorder (a condition
-                                where you "acted out" the dreams)</li>
+                                where you "act out" your dreams)</li>
 <li> Determine why a treatment for a
                                 sleep disorder is not working</li>
 </ul>
 </div>
 </article>
-<aside class="sidebar"><div class="side-card reveal">
-<h3>Categories</h3>
+<aside class="sidebar"><div class="side-card toc reveal">
+<h2 class="lv3">Categories</h2>
 <ul>
-<li><a href="sleep_lab.html#hpss"> How to prepare for the sleep study ?</a></li>
-<li><a href="sleep_lab.html#hssp"> How the sleep study is performed ?</a></li>
-<li><a href="sleep_lab.html#wssp"> Why sleep studies are performed ?</a></li>
+<li class="li-link"><a href="sleep_lab.html#hpss"> How to prepare for the sleep study?</a></li>
+<li class="li-link"><a href="sleep_lab.html#hssp"> How the sleep study is performed?</a></li>
+<li class="li-link"><a href="sleep_lab.html#wssp"> Why sleep studies are performed?</a></li>
 </ul>
 </div>
-<div class="side-card side-cta reveal"><h4>Phone Number</h4><p><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(919) 439 8580</p><a class="btn btn-light btn-block" href="patient_forms.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Patient Forms</a></div></aside>
+<div class="side-card side-cta reveal"><h2>Phone Number</h2><p><a href="tel:+19194398580"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(919) 439 8580</a></p><a class="btn btn-light btn-block" href="patient_forms.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/></svg> Patient Forms</a></div></aside>
 </div></section>
 </main>
+<script>
+  // content already on screen at load is shown straight away; the rest animates in as you scroll
+  (function () {
+    var vh = window.innerHeight;
+    document.querySelectorAll(".reveal").forEach(function (el) {
+      if (el.getBoundingClientRect().top < vh) el.classList.add("in", "now");
+    });
+  })();
+</script>
 
 <footer class="site-footer">
   <svg class="footer-wave" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M0 0h1440v42c-160 34-330 46-520 28S560 18 380 28 120 76 0 58z"/></svg>
   <div class="sky" aria-hidden="true"><div class="stars"><i style="--x:39.5%;--y:4.8%;--s:1px;--o:0.84;--d:2.4s;--dl:-3.5s"></i><i style="--x:3.7%;--y:43.4%;--s:1px;--o:0.39;--d:2.4s;--dl:-2.5s"></i><i style="--x:94.7%;--y:63.1%;--s:1px;--o:0.70;--d:2.2s;--dl:-3.5s"></i><i class="b" style="--x:4.7%;--y:85.8%;--s:3px;--o:0.52;--d:2.6s;--dl:-0.7s"></i><i style="--x:18.1%;--y:58.2%;--s:2.5px;--o:0.73;--d:3.5s;--dl:-3.3s"></i><i class="b" style="--x:61.9%;--y:49.6%;--s:3px;--o:0.67;--d:5.1s;--dl:-2.8s"></i><i style="--x:30.0%;--y:79.4%;--s:1.5px;--o:0.77;--d:3.0s;--dl:-3.4s"></i><i style="--x:72.9%;--y:28.8%;--s:1.5px;--o:0.94;--d:2.5s;--dl:-2.5s"></i><i style="--x:93.3%;--y:42.2%;--s:1px;--o:0.93;--d:2.3s;--dl:-3.3s"></i><i style="--x:34.0%;--y:35.0%;--s:1.5px;--o:0.65;--d:5.2s;--dl:-0.4s"></i><i class="b" style="--x:47.4%;--y:66.4%;--s:3.5px;--o:0.39;--d:4.8s;--dl:-3.9s"></i><i style="--x:28.5%;--y:38.6%;--s:2px;--o:0.75;--d:2.1s;--dl:-2.8s"></i><i style="--x:49.4%;--y:21.8%;--s:1px;--o:0.52;--d:5.0s;--dl:-2.4s"></i><i style="--x:8.1%;--y:44.9%;--s:2px;--o:0.68;--d:5.5s;--dl:-4.9s"></i><i style="--x:70.6%;--y:98.6%;--s:1.5px;--o:0.76;--d:3.5s;--dl:-1.4s"></i><i class="b" style="--x:23.2%;--y:23.3%;--s:3px;--o:0.64;--d:4.4s;--dl:-1.6s"></i><i class="b" style="--x:53.5%;--y:61.0%;--s:3.5px;--o:0.54;--d:2.5s;--dl:-5.2s"></i><i style="--x:67.6%;--y:5.4%;--s:2.5px;--o:0.89;--d:5.1s;--dl:-5.2s"></i><i style="--x:39.8%;--y:39.4%;--s:2px;--o:0.64;--d:3.6s;--dl:-1.1s"></i><i style="--x:16.2%;--y:34.0%;--s:2px;--o:0.38;--d:2.0s;--dl:-0.9s"></i><i class="b" style="--x:61.4%;--y:7.0%;--s:3.5px;--o:0.47;--d:3.5s;--dl:-3.8s"></i><i style="--x:36.4%;--y:12.3%;--s:2px;--o:0.86;--d:6.0s;--dl:-2.8s"></i><i style="--x:14.4%;--y:75.0%;--s:1px;--o:0.79;--d:3.9s;--dl:-4.2s"></i><i style="--x:95.1%;--y:52.8%;--s:1px;--o:0.44;--d:4.2s;--dl:-0.2s"></i><i style="--x:86.3%;--y:69.6%;--s:2.5px;--o:0.51;--d:3.5s;--dl:-1.0s"></i><i style="--x:54.2%;--y:50.3%;--s:2px;--o:0.73;--d:4.5s;--dl:-4.7s"></i><i style="--x:80.6%;--y:81.8%;--s:1px;--o:0.79;--d:2.9s;--dl:-3.1s"></i><i style="--x:99.0%;--y:79.0%;--s:1px;--o:0.63;--d:2.8s;--dl:-3.6s"></i></div><span class="footer-moon"></span></div>
   <div class="container footer-grid">
     <div>
-      <a class="footer-logo" href="index.html"><img src="images/logo.png" alt="Carolina Pulmonary &amp; Sleep Clinic" width="609" height="165" loading="lazy"></a>
-      <p class="contact-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Carolina Pulmonary &amp; Sleep Clinic, <a href="https://goo.gl/maps/b3Ve1hLwKBF2" target="_blank" rel="noopener">570 New Waverly place, Suite 140,</a> Cary, NC 27518</span></p>
-      <p class="contact-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>(919) 439 8580</span></p>
+      <a class="footer-logo" href="index.html"><picture><source srcset="images/logo.webp" type="image/webp"><img src="images/logo.png" alt="Carolina Pulmonary &amp; Sleep Clinic" width="609" height="165" loading="lazy" decoding="async"></picture></a>
+      <p class="contact-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Carolina Pulmonary &amp; Sleep Clinic, <a href="https://goo.gl/maps/b3Ve1hLwKBF2" target="_blank" rel="noopener">570 New Waverly Place, Suite 140,</a> Cary, NC 27518</span></p>
+      <p class="contact-line"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><a href="tel:+19194398580">(919) 439 8580</a></p>
     </div>
     <div>
-      <h4>Patient Education</h4>
+      <h2>Patient Education</h2>
       <ul>
         <li><a href="pulmonolgist.html">Pulmonologist</a></li>
         <li><a href="pulmonary_medicine.html">Pulmonary Medicine</a></li>
@@ -261,7 +277,7 @@
       </ul>
     </div>
     <div>
-      <h4>Patient Services</h4>
+      <h2>Patient Services</h2>
       <ul>
         <li><a href="new_patients.html">New Patients</a></li>
         <li><a href="patient_forms.html">Patient Forms</a></li>
@@ -277,6 +293,11 @@
     </div>
   </div>
 </footer>
+<nav class="action-bar" aria-label="Quick links">
+  <a href="tel:+19194398580"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>(919) 439 8580</span></a>
+  <a href="directions.html"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Directions</span></a>
+  <a href="https://mycw24.eclinicalweb.com/portal2109/jsp/100mp/login_otp.jsp" target="_blank" rel="noopener"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span>Patient Portal</span></a>
+</nav>
 <a class="to-top" href="#" aria-label="Back to top"><svg class="ring" viewBox="0 0 48 48" aria-hidden="true"><path class="track" d="M24 2a22 22 0 1 1 0 44a22 22 0 1 1 0-44"/><path class="bar" pathLength="1" d="M24 2a22 22 0 1 1 0 44a22 22 0 1 1 0-44"/></svg><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m18 15-6-6-6 6"/></svg></a>
 <script src="js/site.js" defer></script>
 </body>

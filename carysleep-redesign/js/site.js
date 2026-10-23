@@ -7,13 +7,20 @@
   var progress = document.querySelector(".progress");
   var toTop = document.querySelector(".to-top");
   var toTopBar = toTop && toTop.querySelector(".bar");
+  var actionBar = document.querySelector(".action-bar");
   var mobile = window.matchMedia("(max-width: 991px)");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   var hasIO = "IntersectionObserver" in window;
 
+  function onMediaChange(mq, fn) {
+    if (mq.addEventListener) mq.addEventListener("change", fn);
+    else if (mq.addListener) mq.addListener(fn);
+  }
+
   // ---- Sidebar links that point at sections of this page (scrollspy) ----
   var spy = [];
+  var spyCurrent = null;
   document.querySelectorAll(".side-card a[href*='#']").forEach(function (a) {
     var url = new URL(a.getAttribute("href"), location.href);
     if (url.pathname !== location.pathname || url.hash.length < 2) return;
@@ -29,10 +36,20 @@
       if (s.target.getBoundingClientRect().top - line <= 0) current = s;
     });
     spy.forEach(function (s) { s.link.classList.toggle("active", s === current); });
+    if (current && current !== spyCurrent) {
+      // on phones the list is a horizontal chip bar: bring the active chip into view
+      var list = current.link.closest("ul");
+      if (list && list.scrollWidth > list.clientWidth) {
+        var offset = current.link.getBoundingClientRect().left - list.getBoundingClientRect().left;
+        list.scrollTo({ left: list.scrollLeft + offset - 8, behavior: reduceMotion.matches ? "auto" : "smooth" });
+      }
+    }
+    spyCurrent = current;
   }
 
-  // ---- Scroll-linked UI: header, progress bar, back-to-top ring ----
+  // ---- Scroll-linked UI: header, progress bar, back-to-top ring, action bar ----
   var ticking = false;
+  var lastY = window.scrollY;
   function onScroll() {
     if (ticking) return;
     ticking = true;
@@ -49,6 +66,14 @@
         toTop.classList.toggle("show", y > 480);
         toTopBar.style.strokeDashoffset = (1 - p).toFixed(4);
       }
+      if (actionBar) {
+        // tuck the bar away while reading down; bring it back on the way up and at the end
+        var dy = y - lastY;
+        if (y < 120 || max - y < 60) actionBar.classList.remove("hide");
+        else if (dy > 8) actionBar.classList.add("hide");
+        else if (dy < -8) actionBar.classList.remove("hide");
+        if (Math.abs(dy) > 8 || y < 120) lastY = y;
+      }
       updateSpy();
     });
   }
@@ -64,12 +89,23 @@
   }
 
   // ---- Navigation ----
-  toggle.addEventListener("click", function () {
-    var open = header.classList.toggle("menu-open");
+  function setMenu(open) {
+    if (open) {
+      // the panel fills the screen below wherever the header bar currently sits
+      header.style.setProperty("--menu-top", Math.round(header.getBoundingClientRect().bottom) + "px");
+    }
+    header.classList.toggle("menu-open", open);
+    doc.classList.toggle("menu-lock", open);
     toggle.setAttribute("aria-expanded", open);
+  }
+  toggle.addEventListener("click", function () {
+    setMenu(!header.classList.contains("menu-open"));
+  });
+  onMediaChange(mobile, function (e) {
+    if (!e.matches) setMenu(false);
   });
 
-  // Top-level "Patient Education" dropdown: click to open (touch + keyboard)
+  // Top-level "Patient Education" dropdown: click/tap to open
   header.querySelectorAll(".nav > .has-sub > button").forEach(function (btn) {
     btn.addEventListener("click", function (e) {
       e.stopPropagation();
@@ -88,7 +124,15 @@
   });
   document.addEventListener("keydown", function (e) {
     if (e.key !== "Escape") return;
-    header.querySelectorAll(".has-sub.open").forEach(function (li) { li.classList.remove("open"); });
+    header.querySelectorAll(".has-sub.open").forEach(function (li) {
+      li.classList.remove("open");
+      var btn = li.querySelector("button");
+      if (btn) btn.setAttribute("aria-expanded", "false");
+    });
+    if (header.classList.contains("menu-open")) {
+      setMenu(false);
+      toggle.focus();
+    }
   });
 
   // ---- Reveal on scroll, staggered within each batch ----
@@ -107,7 +151,9 @@
         n++;
       });
     }, { rootMargin: "0px 0px -8% 0px" });
-    revealEls.forEach(function (el) { revealer.observe(el); });
+    revealEls.forEach(function (el) {
+      if (!el.classList.contains("in")) revealer.observe(el);
+    });
   } else {
     revealEls.forEach(function (el) { el.classList.add("in"); });
   }
