@@ -1,23 +1,6 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-.venv/
-venv/
-*.egg-info/
-
-# Node
-node_modules/
-frontend/.next/
-frontend/out/
-frontend/build/
-
-# Env
-.env
-*.env.local
-
-# IDE
+# OS and editor files
+.DS_Store
+Thumbs.db
 .vscode/
 .idea/
 *.swp
-frontend/tsconfig.tsbuildinfo
