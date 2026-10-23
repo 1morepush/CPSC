@@ -4,6 +4,8 @@ A modern, mobile-friendly redesign of [carysleep.com](https://carysleep.com/), t
 Carolina Pulmonary & Sleep Clinic (Dr. Priyan Samarakoon, MD) in Cary, North Carolina, with a light and a
 dark theme.
 
+**[View the live site → 1morepush.github.io/CPSC](https://1morepush.github.io/CPSC/)**
+
 It is a plain static site (HTML, one stylesheet and one script) with no build step and no dependencies.
 Every page keeps its original file name, so links to the current site keep working once it is uploaded.
 
