@@ -14,40 +14,7 @@
 <link rel="preload" href="fonts/fraunces-latin.woff2" as="font" type="font/woff2" crossorigin>
 <script>(function(d){d.classList.add("js");var t;try{t=localStorage.getItem("theme")}catch(e){}if(t!=="dark"&&t!=="light")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";d.setAttribute("data-theme",t);setTimeout(function(){if(!window.__siteReady)d.classList.add("no-reveal")},2500)})(document.documentElement);</script>
 <link href="css/site.css" rel="stylesheet">
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-135206279-1');
-  // the tag queues hits above; load it once the page has rendered so phones paint first
-  window.addEventListener("load", function () {
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.googletagmanager.com/gtag/js?id=UA-135206279-1";
-    document.head.appendChild(s);
-  });
-</script>
-<script>
-  function passWord(path) {
-    var testV = 1;
-    var pass1 = prompt("Please Enter Your Password", " ");
-    while (testV < 3) {
-      if (pass1.toLowerCase().trim() == "cary1234") {
-        alert("Access Granted!");
-        window.open(path, "_self");
-        break;
-      }
-      testV += 1;
-      var pass1 = prompt(
-        "Access Denied - Password Incorrect, Please Try Again.",
-        "Password"
-      );
-    }
 
-    return " ";
-  }
-</script>
 </head>
 <body class="inner">
 <div class="progress" aria-hidden="true"></div>
@@ -137,12 +104,12 @@
 <ul>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Demographic_form-Practice_guidelines-Consent_and_Financial-Policies.pdf')" type="button">Demographic Form, Practice Guidelines and Financial
-                        Policies</button>
+<a href="pdf/Demographic_form-Practice_guidelines-Consent_and_Financial-Policies.pdf">Demographic Form, Practice Guidelines and Financial
+                        Policies</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Medical_History_Form.pdf')" type="button">Medical History Form</button>
+<a href="pdf/Medical_History_Form.pdf">Medical History Form</a>
 </li>
 </ul>
 
@@ -156,11 +123,11 @@
 <ul>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Sleep_ questionnire.pdf')" type="button">Sleep Questionnaire</button>
+<a href="pdf/Sleep_ questionnire.pdf">Sleep Questionnaire</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Epworth_Sleepiness_Scale.pdf')" type="button">Epworth Sleepiness Scale</button>
+<a href="pdf/Epworth_Sleepiness_Scale.pdf">Epworth Sleepiness Scale</a>
 </li>
 </ul>
 
@@ -174,7 +141,7 @@
 <ul>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Pulmonary_questionnaire.pdf')" type="button">Pulmonary Questionnaire</button>
+<a href="pdf/Pulmonary_questionnaire.pdf">Pulmonary Questionnaire</a>
 </li>
 </ul>
 
@@ -193,35 +160,35 @@
 <ul>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/How_to_prepare_for_the_sleep_study.pdf')" type="button">How to prepare for a sleep study</button>
+<a href="pdf/How_to_prepare_for_the_sleep_study.pdf">How to prepare for a sleep study</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Sleepdiary-ASSM.pdf')" type="button">Sleep Diary - AASM</button>
+<a href="pdf/Sleepdiary-ASSM.pdf">Sleep Diary - AASM</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Insomnia_Handout.pdf')" type="button">Insomnia handout</button>
+<a href="pdf/Insomnia_Handout.pdf">Insomnia handout</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/HSAT-Instructions_and_how_to_troubleshoot.pdf')" type="button">HSAT (Home Sleep Apnea Test) instructions</button>
+<a href="pdf/HSAT-Instructions_and_how_to_troubleshoot.pdf">HSAT (Home Sleep Apnea Test) instructions</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/PAP_NAP_instructions.pdf')" type="button">PAP Nap patient instructions</button>
+<a href="pdf/PAP_NAP_instructions.pdf">PAP Nap patient instructions</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/MSLT_Patient_Instructions.pdf')" type="button">MSLT patient instructions</button>
+<a href="pdf/MSLT_Patient_Instructions.pdf">MSLT patient instructions</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Actigraphy_Patient_instructions.pdf')" type="button">Actigraphy patient instructions</button>
+<a href="pdf/Actigraphy_Patient_instructions.pdf">Actigraphy patient instructions</a>
 </li>
 <li class="li-link">
 
-<button class="link-btn" onclick="passWord('pdf/Overnight_Oximetry_Instructions.pdf')" type="button">Overnight oximetry instructions</button>
+<a href="pdf/Overnight_Oximetry_Instructions.pdf">Overnight oximetry instructions</a>
 </li>
 </ul>
 
@@ -291,7 +258,7 @@
   </div>
   <div class="copyright">
     <div class="container">
-      <p>© Copyright 2019 Powered by <a href="http://www.carypulmonary.com/">Carolina Pulmonary &amp; Sleep Clinic. </a>All Rights Reserved.</p>
+      <p>© Copyright 2019 Powered by <a href="https://carysleep.com/">Carolina Pulmonary &amp; Sleep Clinic. </a>All Rights Reserved.</p>
     </div>
   </div>
 </footer>
