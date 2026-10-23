@@ -49,7 +49,7 @@ Click a preview to open the full video.
 - **Built for phones.** A full-screen menu, a call / directions / patient portal bar at the bottom of the
   screen, and swipeable section chips that follow along as you read. Nothing scrolls sideways, from 320 px
   phones up to tablets.
-- **Fast and accessible.** WebP images, self-hosted fonts, and analytics that load after the page.
+- **Fast and accessible.** WebP images, self-hosted fonts, and no third-party scripts.
   Lighthouse (mobile): Performance 94–98, Accessibility 100, Best Practices 96–100, SEO 91–100. An
   axe-core scan (WCAG A/AA rules) reports no violations in either theme.
 
@@ -128,14 +128,13 @@ Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish d
 
 ## Before going live
 
-- **Analytics:** every page still loads the old site's Google Analytics ID (`UA-135206279-1`), in the
-  `<head>`. Universal Analytics stopped collecting data in July 2023, so replace it with a GA4 measurement
-  ID or remove the snippet.
+- **Analytics:** the site has none. The old Google Analytics ID had stopped collecting data in 2023, so its
+  code was removed; to measure visits, add a GA4 (or other) snippet to each page's `<head>`.
 - **Search box:** the search field in the menu came from the old site's template and, like on the current
   site, doesn't search anything. Connect it to a site search or remove it.
-- **Patient forms password:** some forms open after a password prompt carried over from the old site. The
-  check runs in the browser and the password is visible in the page source, so it only deters casual
-  visitors.
+- **Patient forms are public:** the old site put some blank forms behind a browser-side password prompt, but
+  the password was in the page source and the PDFs could be opened directly, so the prompt was removed and
+  every form is a plain link. Don't put anything private in `pdf/`; it is published with the site.
 - **"read more" links:** the six "read more" links on the home page keep the old site's wording. Search
   engines prefer link text that says where a link goes, which is why the home page scores 91 for SEO.
 - **Content to review:** a few medical statements look out of date (lung cancer screening, COPD
