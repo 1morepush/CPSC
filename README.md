@@ -101,8 +101,18 @@ Upload the **contents** of `carysleep-redesign/` to the website's root folder, r
 Because the file names match the current site, bookmarks, Google results and links from other sites keep
 working.
 
-For a preview link before going live, the folder also works as-is on GitHub Pages, Netlify or Cloudflare
-Pages (publish directory: `carysleep-redesign`).
+### Preview link on GitHub Pages
+
+The repo publishes the site to GitHub Pages automatically (`.github/workflows/pages.yml`) every time
+`carysleep-redesign/` changes on `main`. Turn it on once:
+
+1. On GitHub, open the repo's **Settings → Pages**.
+2. Under **Build and deployment → Source**, choose **GitHub Actions**.
+3. Open the **Actions** tab, pick **Deploy site to GitHub Pages**, and click **Run workflow** (or just push a change).
+
+The site then appears at `https://1morepush.github.io/internet-mood-tracker/` (the address follows the repo
+name if you rename it). Pages is free for public repositories; private ones need a paid GitHub plan.
+Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish directory.
 
 ## Editing
 
@@ -139,6 +149,7 @@ carysleep-redesign/
 ├── fonts/            Fraunces and Plus Jakarta Sans, with their licenses
 ├── images/           photos and icons, each with a WebP copy
 └── pdf/              patient forms
+.github/workflows/pages.yml   publishes the site to GitHub Pages
 docs/
 ├── demo/             demo videos (MP4) and their previews (GIF)
 ├── screenshots/      images used in this README, light and dark
