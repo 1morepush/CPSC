@@ -110,7 +110,7 @@ The repo publishes the site to GitHub Pages automatically (`.github/workflows/pa
 2. Under **Build and deployment → Source**, choose **GitHub Actions**.
 3. Open the **Actions** tab, pick **Deploy site to GitHub Pages**, and click **Run workflow** (or just push a change).
 
-The site then appears at `https://1morepush.github.io/internet-mood-tracker/` (the address follows the repo
+The site then appears at `https://1morepush.github.io/CPSC/` (the address follows the repo
 name if you rename it). Pages is free for public repositories; private ones need a paid GitHub plan.
 Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish directory.
 
