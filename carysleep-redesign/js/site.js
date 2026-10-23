@@ -18,6 +18,65 @@
     else if (mq.addListener) mq.addListener(fn);
   }
 
+  // ---- Light / dark theme ----
+  // The inline script in <head> has already applied the saved choice (or the device setting) before first paint.
+  var themeToggle = header.querySelector(".theme-toggle");
+  var systemDark = window.matchMedia("(prefers-color-scheme: dark)");
+
+  function savedTheme() {
+    try { return localStorage.getItem("theme"); } catch (e) { return null; }
+  }
+  function setTheme(theme) {
+    doc.setAttribute("data-theme", theme);
+    if (themeToggle) themeToggle.setAttribute("aria-pressed", theme === "dark");
+  }
+  function followDevice() {
+    var t = savedTheme();
+    setTheme(t === "dark" || t === "light" ? t : systemDark.matches ? "dark" : "light");
+  }
+  followDevice();
+  onMediaChange(systemDark, followDevice);
+  // another open tab changed the theme
+  window.addEventListener("storage", function (e) {
+    if (e.key === "theme") followDevice();
+  });
+  // paper is white: print in the light theme
+  var themeBeforePrint = null;
+  window.addEventListener("beforeprint", function () {
+    themeBeforePrint = doc.getAttribute("data-theme");
+    doc.setAttribute("data-theme", "light");
+  });
+  window.addEventListener("afterprint", function () {
+    if (themeBeforePrint) doc.setAttribute("data-theme", themeBeforePrint);
+  });
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next = doc.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      try {
+        // choosing what the device already uses means "follow the device" again
+        if ((next === "dark") === systemDark.matches) localStorage.removeItem("theme");
+        else localStorage.setItem("theme", next);
+      } catch (e) { /* storage blocked: the choice lasts for this page only */ }
+
+      if (!document.startViewTransition || reduceMotion.matches) {
+        setTheme(next);
+        return;
+      }
+      // the new theme spreads out in a circle from the switch
+      var r = themeToggle.getBoundingClientRect();
+      var x = r.left + r.width / 2;
+      var y = r.top + r.height / 2;
+      doc.style.setProperty("--vt-x", x + "px");
+      doc.style.setProperty("--vt-y", y + "px");
+      doc.style.setProperty("--vt-r", Math.ceil(Math.hypot(Math.max(x, window.innerWidth - x), Math.max(y, window.innerHeight - y))) + "px");
+      doc.classList.add("theme-switching");
+      var transition = document.startViewTransition(function () { setTheme(next); });
+      transition.finished.then(done, done);
+      function done() { doc.classList.remove("theme-switching"); }
+    });
+  }
+
   // ---- Sidebar links that point at sections of this page (scrollspy) ----
   var spy = [];
   var spyCurrent = null;
@@ -58,9 +117,15 @@
       var y = window.scrollY;
       var max = doc.scrollHeight - window.innerHeight;
       var p = max > 0 ? Math.min(1, Math.max(0, y / max)) : 0;
-      // hysteresis keeps the shrinking header from flickering at the threshold
-      if (y > 40) header.classList.add("scrolled");
-      else if (y < 10) header.classList.remove("scrolled");
+      if (header.classList.contains("menu-open")) {
+        // the page moved under the open menu: keep the panel reaching the bottom of the screen
+        header.style.setProperty("--menu-top", Math.round(header.getBoundingClientRect().bottom) + "px");
+      } else if (y > 40) {
+        // hysteresis keeps the shrinking header from flickering at the threshold
+        header.classList.add("scrolled");
+      } else if (y < 10) {
+        header.classList.remove("scrolled");
+      }
       if (progress) progress.style.transform = "scaleX(" + p.toFixed(4) + ")";
       if (toTop) {
         toTop.classList.toggle("show", y > 480);
@@ -97,6 +162,7 @@
     header.classList.toggle("menu-open", open);
     doc.classList.toggle("menu-lock", open);
     toggle.setAttribute("aria-expanded", open);
+    if (!open) onScroll(); // the header's scrolled state is held while the menu is open
   }
   toggle.addEventListener("click", function () {
     setMenu(!header.classList.contains("menu-open"));
