@@ -912,7 +912,7 @@ html.js:not(.no-reveal) .reveal:not(.in) { opacity: 0; }
 
   .welcome, .doctor { grid-template-columns: minmax(0, 1fr); }
   .welcome .photo { max-width: 440px; margin: 0 auto; }
-  .doctor .portrait { position: static; max-width: 420px; }
+  .doctor .portrait { position: relative; top: 0; max-width: 420px; } /* relative (not static) keeps the blob behind the photo */
   .services, .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-grid > :first-child { grid-column: 1 / -1; }
