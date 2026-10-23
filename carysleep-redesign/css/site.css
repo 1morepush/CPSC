@@ -520,6 +520,7 @@ p { margin: 0 0 1.1em; }
   display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 56px; align-items: center;
   background: #fff; border-radius: 28px; padding: clamp(28px, 5vw, 64px); box-shadow: var(--shadow-lg); border: 1px solid var(--line);
   animation: lift-in 1.1s var(--ease-out) .3s both; /* transform only: the text is readable from the first frame */
+  overflow: hidden; /* keeps the spinning ring's corners in the card on every browser */
 }
 .welcome h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.15; }
 .welcome h2::before { content: ""; display: block; width: 48px; height: 4px; border-radius: 4px; margin-bottom: 20px; background: linear-gradient(90deg, var(--brand), var(--sky)); }
