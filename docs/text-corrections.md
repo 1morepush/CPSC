@@ -205,6 +205,133 @@ No sentences were rewritten and no medical content was changed. Everything not l
 - Fixed the sidebar link “What is the prognosis for people with lung cancer?”: it pointed at a misspelled section name and did nothing.
 - Removed the stray space before “?” in the section headings and the matching sidebar links (e.g. “What causes COPD ?” → “What causes COPD?”).
 
+## Second proofreading pass
+
+A second read-through of every page. Spelling was already clean (every word a spell checker flagged is a medical
+term, drug, insurer or abbreviation); these are grammar and punctuation fixes. The menu also now reads
+"Meet the Doctor" to match the page title.
+
+### Home
+
+| Before | After |
+|---|---|
+| the office of Priyan Samarakoon MD. | the office of Priyan Samarakoon, MD. |
+| Asthma education etc... | Asthma education, etc... |
+
+### Meet the Doctor
+
+| Before | After |
+|---|---|
+| With the additional exposure and having board certification | With the additional exposure and board certification |
+| he has had further expertise | he has further expertise |
+| Previous to his assignment | Prior to his assignment |
+| hobbies include: playing | hobbies include playing |
+
+### Patient Forms
+
+| Before | After |
+|---|---|
+| All New Patients to complete both the forms below | All new patients please complete both forms below |
+| online via the Patient Portal | online via the Patient Portal. |
+
+### Patient Services
+
+| Before | After |
+|---|---|
+| environmental and Inhalational ailments | environmental and inhalational ailments |
+| non-resolving pneumonia etc. | non-resolving pneumonia, etc. |
+| CT scans of chest, PET/CT Scans | CT scans of the chest, PET/CT scans |
+| parasomnias (sleep walking | parasomnias (sleepwalking |
+| REM behavior disorders) | REM behavior disorder) |
+| 6 min walk test | 6-minute walk test |
+| Asthma education, MDI Teaching etc | Asthma education, MDI teaching, etc. |
+
+### New Patients
+
+| Before | After |
+|---|---|
+| List of all the medications | List of all your medications |
+| Per insurance regulations: All patients are required to pay the Co-pay, deductible and Co-Insurance. | Per insurance regulations, all patients are required to pay the co-pay, deductible and co-insurance. |
+| Call our office to get you access | Call our office to get access |
+| It is the patient’s responsibility to verify your | It is your responsibility to verify your |
+
+### Parasomnia
+
+| Before | After |
+|---|---|
+| Sleep walking | Sleepwalking |
+
+### Bronchoscopy
+
+| Before | After |
+|---|---|
+| explain the procedure to you including | explain the procedure to you, including |
+| its benefits, complications and wish to proceed | its benefits and complications, and that you wish to proceed |
+| you will not be completely asleep). | you will not be completely asleep.) |
+
+### Insomnia
+
+| Before | After |
+|---|---|
+| tension, shift-work, etc. | tension, shift work, etc. |
+
+### Sleep Apnea
+
+| Before | After |
+|---|---|
+| the tissue in back of the throat | the tissue in the back of the throat |
+| the cessation of breath due to | the cessation of breathing due to |
+| Typically it is due to neuromuscular problems but | Typically, it is due to neuromuscular problems, but |
+| For women the risk | For women, the risk |
+
+### Asthma
+
+| Before | After |
+|---|---|
+| a person's chance for developing | a person's chance of developing |
+| pollutants including: chemicals | pollutants, including chemicals |
+
+### Sleep Lab
+
+| Before | After |
+|---|---|
+| How to prepare for the sleep study? | How to prepare for the sleep study |
+| How the sleep study is performed? | How is the sleep study performed? |
+| Why sleep studies are performed? | Why are sleep studies performed? |
+| 4. In an emergency or cancellations: | 4. In case of an emergency or cancellation: |
+| call the office (919) | call the office at (919) |
+| call the sleep technician, by dialing | call the sleep technician by dialing |
+| In the morning the technologist | In the morning, the technologist |
+
+### Sarcoidosis
+
+| Before | After |
+|---|---|
+| symptoms of sarcoidosis include | symptoms of sarcoidosis include: |
+
+### COPD
+
+| Before | After |
+|---|---|
+| A COPD exacerbation can be mild to life-threatening. | A COPD exacerbation can range from mild to life-threatening. |
+
+### Pulmonologist
+
+| Before | After |
+|---|---|
+| A description of common diagnostic tests is briefly mentioned below. | Common diagnostic tests are briefly described below. |
+| pulmonary embolism, or blood clot that | pulmonary embolism, or a blood clot that |
+| Glucophage (Metformin) | Glucophage (metformin) |
+| In the outpatient setting this test | In the outpatient setting, this test |
+
+### Lung Cancer
+
+| Before | After |
+|---|---|
+| Thus it may occur | Thus, it may occur |
+| At times they are used | At times, they are used |
+| small cuts in the chest wall, and inserts | small cuts in the chest wall and inserts |
+
 ## Worth a look (not changed)
 
 - **Sleep Lab:** “REM (deep) sleep” — REM sleep isn't the deep stage of sleep; the clinic may want to reword this.
