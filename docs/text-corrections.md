@@ -3,6 +3,8 @@
 Proofreading fixes only: spelling, spacing, punctuation, grammar slips and consistent names.
 No sentences were rewritten and no medical content was changed. Everything not listed here is word-for-word the same as the live site.
 
+> **Update:** the 11 Patient Education topic pages (Pulmonologist through Sleep Apnea) have since been rewritten in plain language, so the corrections listed for those pages no longer apply to their current text. Everything below still applies to the other pages.
+
 ## Site-wide (menu, header and footer)
 
 | Before | After |
