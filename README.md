@@ -142,8 +142,11 @@ Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish d
   every form is a plain link. Don't put anything private in `pdf/`; it is published with the site.
 - **"read more" links:** the six "read more" links on the home page keep the old site's wording. Search
   engines prefer link text that says where a link goes, which is why the home page scores 91 for SEO.
-- **Content to review:** a few medical statements look out of date (lung cancer screening, COPD
-  statistics). They are listed at the end of [docs/text-corrections.md](docs/text-corrections.md).
+- **Doctor review:** the 11 plain-language Patient Education pages are new writing and should be checked by
+  a clinician before launch.
+- **Still to fix in the old text:** the Sleep Lab page calls REM sleep "deep" sleep, the Fayetteville address
+  has no street number, and the "PAP Nap patient instructions" PDF is missing (listed as "ask our office for
+  a copy"). Details at the end of [docs/text-corrections.md](docs/text-corrections.md).
 
 ## Project layout
 
