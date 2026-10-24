@@ -336,8 +336,8 @@ term, drug, insurer or abbreviation); these are grammar and punctuation fixes. T
 
 ## Worth a look (not changed)
 
-- **Sleep Lab:** “REM (deep) sleep” — REM sleep isn't the deep stage of sleep; the clinic may want to reword this.
-- **Lung Cancer:** “there are no currently approved screening tests for lung cancer” — low-dose CT screening has been recommended since 2013.
-- **COPD:** statistics from 2000 and a projection “by 2020”.
+- ~~**Sleep Lab:** “REM (deep) sleep”~~ fixed: now “REM (dreaming) sleep”. REM is the dreaming stage, not deep sleep.
+- ~~**Lung Cancer:** “there are no currently approved screening tests for lung cancer”~~ fixed in the plain-language rewrite, which describes yearly low-dose CT screening.
+- ~~**COPD:** statistics from 2000 and a projection “by 2020”~~ fixed in the plain-language rewrite.
 - **Directions:** the Fayetteville address has no street number (“Ferncreek Drive, Suite 501”).
-- **Patient Forms:** the “PAP Nap patient instructions” PDF is missing from the server.
+- **Patient Forms:** the “PAP Nap patient instructions” PDF is missing from the server. The page lists it as “(ask our office for a copy)” instead of a broken link; add the PDF to `pdf/` and link it again when it's available.

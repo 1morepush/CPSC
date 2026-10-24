@@ -1,6 +1,9 @@
 (function () {
   window.__siteReady = true;
 
+  // footer copyright year stays current
+  document.querySelectorAll("[data-year]").forEach(function (el) { el.textContent = new Date().getFullYear(); });
+
   var doc = document.documentElement;
   var header = document.getElementById("site-header");
   var toggle = header.querySelector(".menu-toggle");
