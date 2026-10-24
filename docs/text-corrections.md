@@ -336,7 +336,7 @@ term, drug, insurer or abbreviation); these are grammar and punctuation fixes. T
 
 ## Worth a look (not changed)
 
-- **Sleep Lab:** “REM (deep) sleep” — REM sleep isn't the deep stage of sleep; the clinic may want to reword this.
+- ~~**Sleep Lab:** “REM (deep) sleep”~~ fixed: now “REM (dreaming) sleep”. REM is the dreaming stage, not deep sleep.
 - ~~**Lung Cancer:** “there are no currently approved screening tests for lung cancer”~~ fixed in the plain-language rewrite, which describes yearly low-dose CT screening.
 - ~~**COPD:** statistics from 2000 and a projection “by 2020”~~ fixed in the plain-language rewrite.
 - **Directions:** the Fayetteville address has no street number (“Ferncreek Drive, Suite 501”).

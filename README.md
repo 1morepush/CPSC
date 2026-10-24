@@ -51,6 +51,9 @@ Click a preview to open the full video.
 - **Motion with restraint.** Sections rise into view as you scroll, cards respond to the cursor, and pages
   cross-fade in browsers that support it. Motion switches off for visitors who turn on "reduce motion" on
   their device, and decorative loops pause while they are off screen.
+- **Site search.** The search box (in the menu bar, or at the top of the menu on phones) opens
+  `search.html`, which ranks every section of every page against the search words and highlights where they
+  match. The index, `search-index.json`, is generated with the pages; it needs no server.
 - **Built for phones.** A full-screen menu, a call / directions / patient portal bar at the bottom of the
   screen, and swipeable section chips that follow along as you read. Nothing scrolls sideways, from 320 px
   phones up to tablets.
@@ -135,8 +138,6 @@ Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish d
 
 - **Analytics:** the site has none. The old Google Analytics ID had stopped collecting data in 2023, so its
   code was removed; to measure visits, add a GA4 (or other) snippet to each page's `<head>`.
-- **Search box:** the search field in the menu came from the old site's template and, like on the current
-  site, doesn't search anything. Connect it to a site search or remove it.
 - **Patient forms are public:** the old site put some blank forms behind a browser-side password prompt, but
   the password was in the page source and the PDFs could be opened directly, so the prompt was removed and
   every form is a plain link. Don't put anything private in `pdf/`; it is published with the site.
@@ -144,9 +145,10 @@ Netlify or Cloudflare Pages work too, with `carysleep-redesign` as the publish d
   engines prefer link text that says where a link goes, which is why the home page scores 91 for SEO.
 - **Doctor review:** the 11 plain-language Patient Education pages are new writing and should be checked by
   a clinician before launch.
-- **Still to fix in the old text:** the Sleep Lab page calls REM sleep "deep" sleep, the Fayetteville address
-  has no street number, and the "PAP Nap patient instructions" PDF is missing (listed as "ask our office for
-  a copy"). Details at the end of [docs/text-corrections.md](docs/text-corrections.md).
+- **Needs the clinic:** the Fayetteville address has no street number (a public listing puts a different
+  practice at 4140 Ferncreek Dr, Suite 501, so please confirm before adding it), and the "PAP Nap patient
+  instructions" PDF is missing (listed as "ask our office for a copy"). Details at the end of
+  [docs/text-corrections.md](docs/text-corrections.md).
 
 ## Project layout
 
@@ -155,6 +157,8 @@ carysleep-redesign/
 ├── *.html            20 pages, named as on carysleep.com
 ├── css/site.css      all styles, light and dark
 ├── js/site.js        menu, scroll effects, animations, theme switch
+├── js/search.js      the search results page
+├── search.html, search-index.json   site search (index generated with the pages)
 ├── fonts/            Fraunces and Plus Jakarta Sans, with their licenses
 ├── images/           photos and icons, each with a WebP copy
 └── pdf/              patient forms
