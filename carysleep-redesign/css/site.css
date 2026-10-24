@@ -466,6 +466,15 @@ html:not(.js) .theme-toggle { display: none; } /* it needs the script */
 .prose .media img { transition: transform .8s var(--ease-out); }
 .prose .float { float: left; width: min(44%, 360px); margin: .3em 28px 18px 0; }
 .prose .split { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 32px; align-items: start; margin-bottom: 1em; }
+/* plain-language topic pages */
+.prose .read-time { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 1.2em; padding: 6px 14px; border-radius: 999px; background: var(--bg-tint); color: var(--accent); font-size: 14px; font-weight: 600; }
+.prose .read-time .icon { width: 16px; height: 16px; }
+.prose .key-points { margin-top: 0; }
+.prose .key-points h2 { text-transform: uppercase; letter-spacing: .08em; font-size: 14px; color: var(--accent); }
+.prose .note { clear: both; margin: 2em 0 0; padding-top: 1.2em; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+.prose ol { margin: 0 0 1.3em; }
+.prose ul, .prose ol { display: flow-root; } /* a list beside a floated photo stays in one column instead of splitting around it */
+.prose ol li { margin: 0 0 .55em; padding-left: 4px; }
 .prose .subtitle { display: block; margin: -.4em 0 1em; color: var(--muted); font-size: 18px; font-style: italic; }
 
 .card {

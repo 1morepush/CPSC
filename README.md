@@ -35,9 +35,14 @@ Click a preview to open the full video.
 
 ## Highlights
 
-- **Same content.** Wording, links, forms and contact details come from the live site. Only proofreading
-  fixes were made (spelling, spacing, punctuation, broken in-page links), and every one is listed in
-  [docs/text-corrections.md](docs/text-corrections.md).
+- **Plain-language patient education.** The 11 Patient Education topic pages (Pulmonologist, Asthma, COPD,
+  Sarcoidosis, Lung Cancer, Bronchoscopy, Insomnia, Narcolepsy, Restless Legs Syndrome, Parasomnia and Sleep
+  Apnea) are rewritten for everyday readers: a "Key points" summary, short sections with question headings,
+  a reading time (2 to 5 minutes each) and section chips to jump around. Outdated statements were updated
+  (for example, lung cancer screening is now recommended for many current and former smokers). A doctor
+  should review these pages before the site goes live.
+- **Same content elsewhere.** On every other page, wording, links, forms and contact details come from the
+  live site with only proofreading fixes, each listed in [docs/text-corrections.md](docs/text-corrections.md).
 - **New look.** A night-sky hero with drifting stars and a glowing moon, the logo's purple carried through
   the whole site, and Fraunces and Plus Jakarta Sans type.
 - **Light and dark.** A sun/moon switch in the header turns on the dark theme. Pages follow the device's
